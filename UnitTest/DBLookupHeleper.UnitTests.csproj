@@ -72,13 +72,13 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\BizTalkComponents.ExtensionObjects.DBLookupHeleper.csproj">
-      <Project>{e8871dd6-1abc-4679-86c6-58fe2d5a8cd0}</Project>
-      <Name>BizTalkComponents.ExtensionObjects.DBLookupHeleper</Name>
-    </ProjectReference>
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <ProjectReference Include="..\src\DBLookupHelper\DBLookupHeleper.csproj">
+      <Project>{e8871dd6-1abc-4679-86c6-58fe2d5a8cd0}</Project>
+      <Name>DBLookupHeleper</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

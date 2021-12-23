@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>BizTalkComponents.ExtensionObjects.DBLookupHelper</id>
+    <version>$version$</version>
+    <title>DBLookupHelper</title>
+    <authors>Wael Alissa</authors>
+    <owners>Wael Alissa</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/walissa/DBLookupHelper</projectUrl>
+    <description>DBLookupHelper is an extension object that can be used in XSLT to retreive information from a table or a view in a database.</description>
+    <releaseNotes>all BizTalk versions</releaseNotes>
+    <copyright>Copyright 2021</copyright>
+    <tags>BizTalk</tags>
+  </metadata>
+  <files>
+    <file src="bin\release\BizTalkComponents.ExtensionObjects.DBLookupHelper.dll" target="lib\net45"/>
+  </files>
+</package>
