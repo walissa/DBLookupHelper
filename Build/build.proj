@@ -7,18 +7,18 @@
     <ApplicationName>Shared</ApplicationName>
   </PropertyGroup>
   <ItemGroup>
-    <Resource Include="..\Src\DatabaseHelper\bin\$(Configuration)\BizTalkComponents.ExtensionObjects.DBLookupHeleper.dll" />
+    <Resource Include="..\Src\DBLookupHeleper\bin\$(Configuration)\BizTalkComponents.ExtensionObjects.DBLookupHeleper.dll" />
   </ItemGroup>
 
   <Target Name="GetVersion">
-    <MSBuild.ExtensionPack.Framework.Assembly TaskAction="GetInfo" NetAssembly="..\Src\DatabaseHelper\bin\$(Configuration)\BizTalkComponents.ExtensionObjects.DBLookupHeleper.dll">
+    <MSBuild.ExtensionPack.Framework.Assembly TaskAction="GetInfo" NetAssembly="..\Src\DBLookupHeleper\bin\$(Configuration)\BizTalkComponents.ExtensionObjects.DBLookupHeleper.dll">
       <Output TaskParameter="OutputItems" ItemName="Info"/>
     </MSBuild.ExtensionPack.Framework.Assembly>
   </Target>
 
   <Target Name="GenerateMsi" DependsOnTargets="GetVersion">
     <MsiTask
-			FileName="BizTalkComponents.WCFExtensions.SecurityTokenHelper%(Info.AssemblyInformationalVersion).msi"
+			FileName="BizTalkComponents.ExtensionObjects.DBLookupHeleper%(Info.AssemblyInformationalVersion).msi"
 			DestinationPath="$(DestinationPath)"
 			ApplicationName="$(ApplicationName)"
       SourceLocation="C:\%(Info.AssemblyInformationalVersion)"
