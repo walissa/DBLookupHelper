@@ -4,7 +4,7 @@
 
   <PropertyGroup>
     <DestinationPath>$(build_artifactstagingdirectory)</DestinationPath>
-    <ApplicationName>Shared</ApplicationName>
+    <ApplicationName>BizTalkComponents.ExtensionObjects.DBLookupHelper</ApplicationName>
   </PropertyGroup>
   <ItemGroup>
     <Resource Include="..\Src\DBLookupHelper\bin\$(Configuration)\BizTalkComponents.ExtensionObjects.DBLookupHelper.dll" />
