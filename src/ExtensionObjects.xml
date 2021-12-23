@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ExtensionObjects>
-  <ExtensionObject Namespace ="http://BizTalkComponents.ExtensionObjects.DBLookupHeleper"
-                 AssemblyName="BizTalkComponents.ExtensionObjects.DBLookupHelper, 
-                 Version=1.0.0.0, 
-                 Culture=neutral, 
-                 PublicKeyToken=7410abceb6b530bb"
-                 ClassName="BizTalkComponents.ExtensionObjects.DBLookupHeleper.DatabaseHelper" />
-</ExtensionObjects>

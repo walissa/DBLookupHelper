@@ -1,3 +1,5 @@
+[![Build status](https://waal.visualstudio.com/BizTalk%20Components/_apis/build/status/DBLookuphelper)](https://waal.visualstudio.com/BizTalk%20Components/_build/latest?definitionId=13)
+
 # DBLookupHelper
 DBLookupHelper is an extension object that can be used in XSLT to retreive information from a table or a view in a database.
 
