@@ -145,21 +145,32 @@ namespace BizTalkComponents.ExtensionObjects.DBLookupHeleper
         {
             XmlDocument doc = new XmlDocument();
             StringBuilder sb = new StringBuilder();
-            sb.Append("<LookupResult>");
+            XmlWriter writer = XmlWriter.Create(sb);
+            writer.WriteStartDocument(true);
+            writer.WriteStartElement("LookupResult");
             var reader = GetData(tableName, filter, orderBy, maxRecords);
             if (reader != null && reader.HasRows)
             {
                 while (reader.Read())
                 {
-                    sb.Append($"<{tableName}>");
+                    writer.WriteStartElement(tableName);
                     for (int i = 0; i < reader.FieldCount; i++)
-                        sb.AppendFormat("<{0}>{1}</{0}>", reader.GetName(i), reader.GetValue(i));
-                    sb.Append($"</{tableName}>");
+                    {
+                        if (reader.GetValue(i) != DBNull.Value)
+                        {
+                            writer.WriteStartElement(reader.GetName(i));
+                            writer.WriteValue(reader.GetValue(i));
+                            writer.WriteEndElement();
+                        }
+                    }
+                    writer.WriteEndElement();
                 }
             }
+            writer.WriteEndElement();
+            writer.Flush();
+            writer.Close();
             reader?.Close();
             connection?.Close();
-            sb.Append("</LookupResult>");
             var xmldoc = new XmlDocument();
             xmldoc.LoadXml(sb.ToString());
             var result = xmldoc.CreateNavigator().Select("/LookupResult");
