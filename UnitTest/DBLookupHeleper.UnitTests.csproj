@@ -72,12 +72,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\BizTalkComponents.ExtensionObjects.DBLookupHeleper.csproj">
-      <Project>{e8871dd6-1abc-4679-86c6-58fe2d5a8cd0}</Project>
-      <Name>BizTalkComponents.ExtensionObjects.DBLookupHeleper</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <Choose>
