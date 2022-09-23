@@ -78,10 +78,10 @@ namespace BizTalkComponents.ExtensionObjects.DBLookupHelper.UnitTests.Properties
         
         /// <summary>
         ///   Looks up a localized string similar to 
-        ///if exists(select 1 from sys.databases where name=&apos;sales_test&apos;)
-        ///drop database Sales_test
+        ///if exists(select 1 from sys.databases where name=&apos;Sales&apos;)
+        ///drop database Sales
         ///
-        ///create database sales_test.
+        ///create database Sales.
         /// </summary>
         internal static string Create_TestDatabase {
             get {
