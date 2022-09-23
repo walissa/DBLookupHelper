@@ -11,12 +11,12 @@ Sets the connection to the database.
 
 |   Parameters |   |  | |
 | ------------ | ------------ | ------------ | ------------ |
-|connection  | string   | optional  | refers to the name of the connection string defined in the application configuration file, or a valid connection string to the database.|
+|connection  | string   | optional  | refers to the variable name that holds the connection string defined under system variables(environment variables), or key name of the connection string  in the application configuration file, or a valid connection string to the database.|
 
-By default, this function is called internally, and it uses the default connection string name **DBLookupHelper_DefaultConnection**, the connection string must be defined in the application configuration file under the connectionstrings section.
+By default, this function is called internally, and it uses the default connection string name **DBLookupHelper_DefaultConnection**, the connection string must be defined in the application configuration file under the connectionstrings section, or as a system variable under environment variables, or it can be called with the connection string itself.
 
 #### GetValue
-Retreives a value from a table of a view based on the filter applied,** if the filter returns mulitple records, the value will be retreived from the first record.**
+Retreives a value from a table of a view based on the filter applied, **if the filter returns mulitple records, the value will be retreived from the first record.**
 
 ` GetValue(string tableName, string filter, string order)`
 
@@ -28,7 +28,7 @@ Retreives a value from a table of a view based on the filter applied,** if the f
 
 
 #### GetRecord
-Retreives a record from a table or a view as XPathNodeIterator based on the filter applied, ** if the filter returns mulitple records, only the first record will be retreived.**
+Retreives a record from a table or a view as XPathNodeIterator based on the filter applied, **if the filter returns mulitple records, only the first record will be retreived.**
 
 `XPathNodeIterator GetRecord(string tableName,string filter, string order)`
 
@@ -39,7 +39,7 @@ Retreives a record from a table or a view as XPathNodeIterator based on the filt
 | order | string | optional | an order by clause to sort the result according to i.e. `order by field1 desc, field3 asc` |
 
 #### GetRecords
-Retreives a record from a table or a view as XPathNodeIterator based on the filter applied, ** if the filter returns mulitple records, only the first record will be retreived.**
+Retreives a record from a table or a view as XPathNodeIterator based on the filter applied, **if the filter returns mulitple records, only the first record will be retreived.**
 
 `XPathNodeIterator GetRecords(string tableName,string filter, string order,int maxRecords)`
 
@@ -55,12 +55,12 @@ Retreives a record from a table or a view as XPathNodeIterator based on the filt
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <ExtensionObjects>
-  <ExtensionObject Namespace ="http://BizTalkComponents.ExtensionObjects.DBLookupHeleper"
+  <ExtensionObject Namespace ="http://BizTalkComponents.ExtensionObjects.DBLookupHelper"
                  AssemblyName="BizTalkComponents.ExtensionObjects.DBLookupHelper, 
                  Version=1.0.0.0, 
                  Culture=neutral, 
                  PublicKeyToken=7410abceb6b530bb"
-                 ClassName="BizTalkComponents.ExtensionObjects.DBLookupHeleper.DatabaseHelper" />
+                 ClassName="BizTalkComponents.ExtensionObjects.DBLookupHelper.DBLookupHelper" />
 </ExtensionObjects>
 ```
 
@@ -69,7 +69,7 @@ Retreives a record from a table or a view as XPathNodeIterator based on the filt
 
 ```xml
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
-                xmlns:dbhelper="http://BizTalkComponents.ExtensionObjects.DBLookupHeleper"
+                xmlns:dbhelper="http://BizTalkComponents.ExtensionObjects.DBLookupHelper"
                 exclude-result-prefixes="dbhelper xsl">
   <xsl:template match="/">
     <TestingDbHelper>

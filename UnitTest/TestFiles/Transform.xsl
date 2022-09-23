@@ -1,5 +1,5 @@
 ﻿<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
-                xmlns:dbhelper="http://BizTalkComponents.ExtensionObjects.DBLookupHeleper"
+                xmlns:dbhelper="http://BizTalkComponents.ExtensionObjects.DBLookupHelper"
                 exclude-result-prefixes="dbhelper xsl">
   <xsl:template match="/">
     <TestingDbHelper>
