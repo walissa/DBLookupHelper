@@ -1,16 +1,19 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Xml.Xsl;
 using System.IO;
-using System.Resources;
 using System.Reflection;
 using System.Xml;
 
-namespace BizTalkComponents.ExtensionObjects.DBLookupHeleper.UnitTests
+namespace BizTalkComponents.ExtensionObjects.DBLookupHelper.UnitTests
 {
     [TestClass]
-    public class TestDatabaseHelper
+    public class TestDBLookupHelper
     {
+        public TestDBLookupHelper()
+        {
+            //Helper.CreateDatabase();
+        }
+
         [TestMethod]
         public void TestDefaultConnectionString()
         {
@@ -43,10 +46,11 @@ namespace BizTalkComponents.ExtensionObjects.DBLookupHeleper.UnitTests
         public void TestXsltFile()
         {
             var trasnform = new XslCompiledTransform();
+
             var xslReader = XmlReader.Create(GetEmbdedResourceAsStream("TestFiles.Transform.xsl"));
             trasnform.Load(xslReader);
             var argList = new XsltArgumentList();
-            argList.AddExtensionObject("http://BizTalkComponents.ExtensionObjects.DBLookupHeleper", new DBLookupHelper());
+            argList.AddExtensionObject("http://BizTalkComponents.ExtensionObjects.DBLookupHelper", new DBLookupHelper());
             var xmlInput = XmlReader.Create(new StringReader("<test/>"));
             var sw = new StringWriter();
             var xmlOutput = XmlWriter.Create(sw);
