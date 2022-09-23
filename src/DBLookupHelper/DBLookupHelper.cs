@@ -204,6 +204,10 @@ namespace BizTalkComponents.ExtensionObjects.DBLookupHelper
         private string BuildQuery(string tableName, string filter, string orderBy, int maxRecords)
         {
             filter = Regex.Replace(filter, @"\{([^\{\}]*)\}", "\'$1\'");
+            if (!tableName.StartsWith("[") & !tableName.EndsWith("]"))
+            {
+                tableName = string.Format("[{0}]", tableName);
+            }
             string sqlstr = "select";
             if (maxRecords > 0)
                 sqlstr += string.Format(" top {0}", maxRecords);
