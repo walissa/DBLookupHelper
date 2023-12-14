@@ -3,6 +3,13 @@
 # DBLookupHelper
 DBLookupHelper is an extension object that can be used in XSLT to retreive information from a table or a view in a database.
 
+## Setup
+Because DBLookupHelper uses Windows EventLog, a registery key must be created first, if the user running the host has permission to create registery keys and values, DBLookupHelper will create these keys and values automatically, otherwise you can create these keys and values using the following Powershell commands:
+```
+new-Item -path 'HKLM:\SYSTEM\CurrentControlSet\Services\EventLog\Application' -name DBLookupHelper -Force
+New-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\EventLog\Application\DBLookupHelper' -Name EventMessageFile -PropertyType ExpandString -Value 'C:\Windows\Microsoft.NET\Framework\v4.0.30319\EventLogMessages.dll' -Force
+```
+
 ## Methods
 #### SetConnection
 Sets the connection to the database.
@@ -13,16 +20,20 @@ Sets the connection to the database.
 | ------------ | ------------ | ------------ | ------------ |
 |connection  | string   | optional  | refers to the variable name that holds the connection string defined under system variables(environment variables), or key name of the connection string  in the application configuration file, or a valid connection string to the database.|
 
-By default, this function is called internally, and it uses the default connection string name **DBLookupHelper_DefaultConnection**, the connection string must be defined in the application configuration file under the connectionstrings section, or as a system variable under environment variables, or it can be called with the connection string itself.
+By default, this function is called internally, and it uses the default connection string name **DBLookupHelper_DefaultConnection**, the connection string must be defined in:
+- The application configuration file under the connectionstrings section
+- Or as a system variable under environment variables
+- Or it can hold the connection string to the database (i.e. Server=<i>servername</i>;database=<i>dbname</i>; Integrated Security=True).
 
 #### GetValue
 Retreives a value from a table of a view based on the filter applied, **if the filter returns mulitple records, the value will be retreived from the first record.**
 
-` GetValue(string tableName, string filter, string order)`
+` GetValue(string tableName, string fieldName, string filter, string order)`
 
 |   Parameters |   |  | |
 | ------------ | ------------ | ------------ | ------------ |
 | tableName | string| required | the table or the view to retreive the record from.|
+| fieldName | string| required | the field holds the value to be returned.|
 | filter | string | optional |  a where clause to filter the result based on i.e. `field1 = 'value1' and field2 is null`|
 | order | string | optional | an order by clause to sort the result according to i.e. ` field1 desc, field3 asc` |
 
