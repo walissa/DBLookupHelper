@@ -18,10 +18,14 @@ namespace BizTalkComponents.ExtensionObjects.DBLookupHelper
     public class DBLookupHelper
     {
         private const string asmName = "DBLookupHelper";
-        private SqlConnection connection;
-        private Dictionary<string, object> retreivedRecord = new Dictionary<string, object>();
-        public bool IsConnectionValid { get; private set; }
+        public SerializableDictionary<string, object> retreivedRecord = new SerializableDictionary<string, object>();
+        public bool IsConnectionValid { get; set; }
+        public string ConnectionString { get; set; }
 
+        public DBLookupHelper()
+        {
+
+        }
         /// <summary>
         /// Sets the connection for the current instance, a connectionstring name in the configuration can be provided, or a connection string to the database, if the parameter is not provided or it is null, the default connection will be used instead
         /// </summary>
@@ -63,7 +67,6 @@ namespace BizTalkComponents.ExtensionObjects.DBLookupHelper
         {
             return SetConnection("DBLookupHelper_DefaultConnection");
         }
-        public string ConnectionString { get; private set; }
 
         private bool CheckConnection()
         {
@@ -87,7 +90,6 @@ namespace BizTalkComponents.ExtensionObjects.DBLookupHelper
                 val = reader[fieldName].ToString();
             }
             reader?.Close();
-            connection?.Close();
             return val;
         }
 
@@ -117,7 +119,6 @@ namespace BizTalkComponents.ExtensionObjects.DBLookupHelper
                 retval = true;
             }
             reader?.Close();
-            connection?.Close();
             return retval;
         }
         public string RetreiveField(string fieldName)
@@ -170,7 +171,6 @@ namespace BizTalkComponents.ExtensionObjects.DBLookupHelper
             writer.Flush();
             writer.Close();
             reader?.Close();
-            connection?.Close();
             var xmldoc = new XmlDocument();
             xmldoc.LoadXml(sb.ToString());
             var result = xmldoc.CreateNavigator().Select("/LookupResult");
@@ -183,7 +183,7 @@ namespace BizTalkComponents.ExtensionObjects.DBLookupHelper
             if (CheckConnection())
             {
                 var sqlstr = BuildQuery(tableName, filter, orderBy, maxRecords);
-                connection = new SqlConnection(ConnectionString);
+                var connection = new SqlConnection(ConnectionString);
                 var cmd = new SqlCommand(sqlstr, connection);
                 try
                 {
@@ -223,7 +223,7 @@ namespace BizTalkComponents.ExtensionObjects.DBLookupHelper
          * Log all errors in the windows event log.
          * and for some cases throw an exception.
          */
-        private void LogEvent(Exception ex, bool throwException = false, [CallerMemberName]string memberName = "")
+        private void LogEvent(Exception ex, bool throwException = false, [CallerMemberName] string memberName = "")
         {
             string errorMessage = "";
             if (ex.InnerException == null)
@@ -244,7 +244,7 @@ namespace BizTalkComponents.ExtensionObjects.DBLookupHelper
             EventLog.WriteEntry(asmName, errorMessage, isException ? EventLogEntryType.Error : EventLogEntryType.Warning);
         }
 
-        private void LogEvent(string errorMessage, [CallerMemberName]string memberName = "")
+        private void LogEvent(string errorMessage, [CallerMemberName] string memberName = "")
         {
             errorMessage = string.Format("Procedure: {0}\nError Message: {1}",
              memberName, errorMessage);

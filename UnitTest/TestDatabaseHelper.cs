@@ -3,6 +3,8 @@ using System.Xml.Xsl;
 using System.IO;
 using System.Reflection;
 using System.Xml;
+using System.Configuration;
+using System.Xml.Serialization;
 
 namespace BizTalkComponents.ExtensionObjects.DBLookupHelper.UnitTests
 {
@@ -11,8 +13,18 @@ namespace BizTalkComponents.ExtensionObjects.DBLookupHelper.UnitTests
     {
         public TestDBLookupHelper()
         {
-            //Helper.CreateDatabase();
+            var path = Assembly.GetExecutingAssembly().Location;
+            path = Path.Combine(Path.GetDirectoryName(path), "AppData");
+            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            for (int i = 0; i < config.ConnectionStrings.ConnectionStrings.Count; i++)
+            {
+                config.ConnectionStrings.ConnectionStrings[i].ConnectionString =
+                    config.ConnectionStrings.ConnectionStrings[i].ConnectionString.Replace("|AppData|", path);
+            }
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("ConnectionStrings");
         }
+
 
         [TestMethod]
         public void TestDefaultConnectionString()
@@ -65,6 +77,26 @@ namespace BizTalkComponents.ExtensionObjects.DBLookupHelper.UnitTests
             var result = dbhelper.RetreiveRecord("Customers", "", "CustomerId desc");
             dbhelper.RetreiveField("Email");
             dbhelper.RetreiveField("CustomerId");
+        }
+
+        [TestMethod]
+        public void TestSerialization()
+        {
+            var serializer = new XmlSerializer(typeof(DBLookupHelper));
+            var dbhelper = new DBLookupHelper();
+            var writer = new StringWriter();
+            var value = dbhelper.GetValue("Customers", "Email", "CustomerId=1");
+            serializer.Serialize(writer, dbhelper);
+
+            var result = dbhelper.RetreiveRecord("Customers", "", "CustomerId desc");
+            dbhelper.RetreiveField("Email");
+            dbhelper.RetreiveField("CustomerId");
+            writer = new StringWriter();
+            serializer.Serialize(writer, dbhelper);
+            writer.Flush();
+            string xml = writer.ToString();
+            var reader = new StringReader(xml);
+            var dbh = serializer.Deserialize(reader);
         }
 
         private Stream GetEmbdedResourceAsStream(string resourceName)
